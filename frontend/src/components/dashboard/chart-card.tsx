@@ -93,14 +93,16 @@ export function ChartCard() {
                   fontSize: '11px',
                   boxShadow: 'var(--shadow-lg)',
                 }}
-                labelFormatter={(v: string) =>
-                  new Date(v).toLocaleDateString('en', {
+                labelFormatter={(label) => {
+                  const value = label == null ? '' : String(label);
+                  if (!value) return '';
+                  return new Date(value).toLocaleDateString('en', {
                     weekday: 'short',
                     month: 'short',
                     day: 'numeric',
-                  })
-                }
-                formatter={(value: number) => [`${value}${chart.unit}`, chart.label]}
+                  });
+                }}
+                formatter={(value) => [`${value ?? 0}${chart.unit}`, chart.label]}
               />
               <Area
                 type="monotone"

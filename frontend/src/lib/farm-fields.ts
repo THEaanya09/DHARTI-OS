@@ -103,7 +103,7 @@ export const DEFAULT_FARM_MODEL_FIELDS: FarmModelFields = {
 /** Fill missing soil fields with typical cropland presets. */
 export function withSoilPresets(
   fields: Partial<FarmModelFields>,
-): Partial<FarmModelFields> {
+): Pick<FarmModelFields, 'soil_n' | 'soil_p' | 'soil_k' | 'soil_ph' | 'soil_type'> {
   return {
     soil_n: fields.soil_n ?? PRESET_SOIL_VALUES.soil_n,
     soil_p: fields.soil_p ?? PRESET_SOIL_VALUES.soil_p,
