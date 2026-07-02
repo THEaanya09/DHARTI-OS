@@ -3,7 +3,30 @@
    ============================================================ */
 
 // ─── Localization ───────────────────────────────────────────
-export type Locale = 'en' | 'hi';
+export type Locale =
+  | 'en'   // English
+  | 'hi'   // Hindi
+  | 'bn'   // Bengali
+  | 'te'   // Telugu
+  | 'mr'   // Marathi
+  | 'ta'   // Tamil
+  | 'gu'   // Gujarati
+  | 'ur'   // Urdu
+  | 'kn'   // Kannada
+  | 'or'   // Odia
+  | 'ml'   // Malayalam
+  | 'pa'   // Punjabi
+  | 'as'   // Assamese
+  | 'mai'  // Maithili
+  | 'sa'   // Sanskrit
+  | 'ne'   // Nepali
+  | 'sd'   // Sindhi
+  | 'ks'   // Kashmiri
+  | 'doi'  // Dogri
+  | 'kok'  // Konkani
+  | 'mni'  // Manipuri
+  | 'sat'  // Santali
+  | 'bo';  // Bodo
 
 export type Dictionary = typeof import('@/lib/i18n/dictionaries/en.json');
 

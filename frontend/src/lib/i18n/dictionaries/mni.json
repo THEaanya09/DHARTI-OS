@@ -1,22 +1,22 @@
 {
   "meta": {
-    "title": "DHARTI AI — Climate Decision Intelligence",
-    "description": "AI-Powered platform helping farmers and governments make smarter climate decisions",
-    "tagline": "Intelligence for the Earth"
+    "title": "ধরতি AI — ৱাতাবরণ সিদ্ধান্ত বুদ্ধিমত্তা",
+    "description": "লৌমী অমসুং সরকারবু ফগৎপা ৱাতাবরণ সিদ্ধান্ত লৌনবা মতেং পাংবা AI-চালিত প্লেটফর্ম",
+    "tagline": "পৃথিবীগীদমক বুদ্ধিমত্তা"
   },
   "nav": {
-    "home": "Home",
-    "features": "Features",
-    "about": "About",
-    "impact": "Impact",
-    "pricing": "Pricing",
-    "login": "Log in",
-    "signup": "Get Started",
-    "dashboard": "Dashboard",
-    "analyze": "Analyze",
-    "predictions": "Predictions",
-    "settings": "Settings",
-    "logout": "Log out"
+    "home": "হোম",
+    "features": "ফিচর্স",
+    "about": "ঐখোয়গী মতাংদা",
+    "impact": "প্রভাব",
+    "pricing": "মচিং",
+    "login": "লোগ ইন",
+    "signup": "হৌদোকউ",
+    "dashboard": "ড্যাশবোর্ড",
+    "analyze": "এনালাইজ",
+    "predictions": "আশাকী ৱা",
+    "settings": "সেটিংস",
+    "logout": "লোগ আউট"
   },
   "landing": {
     "hero": {
@@ -93,25 +93,46 @@
           "label": "Weather Intelligence",
           "title": "Beyond forecasts",
           "description": "Hyperlocal weather intelligence calibrated to your exact field location, not the nearest city.",
-          "metrics": ["Temperature", "Humidity", "Wind", "Precipitation", "UV Index"]
+          "metrics": [
+            "Temperature",
+            "Humidity",
+            "Wind",
+            "Precipitation",
+            "UV Index"
+          ]
         },
         "flood": {
           "label": "Flood Intelligence",
           "title": "Predict before it rises",
           "description": "River-level monitoring, catchment analysis, and flood probability models with 72-hour advance warning.",
-          "metrics": ["River Level", "Catchment Saturation", "Flow Rate", "Flood Probability"]
+          "metrics": [
+            "River Level",
+            "Catchment Saturation",
+            "Flow Rate",
+            "Flood Probability"
+          ]
         },
         "yield": {
           "label": "Yield Prediction",
           "title": "Know before you grow",
           "description": "AI-powered yield estimation factoring soil health, weather patterns, historical performance, and market signals.",
-          "metrics": ["Predicted Yield", "Confidence", "Historical Comparison", "Market Price"]
+          "metrics": [
+            "Predicted Yield",
+            "Confidence",
+            "Historical Comparison",
+            "Market Price"
+          ]
         },
         "sustainability": {
           "label": "Sustainability",
           "title": "Measure what matters",
           "description": "Track your environmental footprint with precision. Water efficiency, carbon impact, biodiversity score — all in one view.",
-          "metrics": ["Water Efficiency", "Carbon Footprint", "Soil Health", "Biodiversity"]
+          "metrics": [
+            "Water Efficiency",
+            "Carbon Footprint",
+            "Soil Health",
+            "Biodiversity"
+          ]
         }
       }
     },
@@ -175,10 +196,26 @@
       "title": "Know your harvest before you sow",
       "description": "AI-powered yield estimation that factors in soil health, weather patterns, historical performance, and market signals. Make planting decisions with confidence.",
       "metrics": [
-        { "label": "Predicted Yield", "value": "4.2 t/acre", "detail": "+10.5% vs regional avg" },
-        { "label": "Confidence", "value": "87%", "detail": "High accuracy model" },
-        { "label": "Best Window", "value": "Jul 9-11", "detail": "Optimal harvest dates" },
-        { "label": "Market Price", "value": "₹2,240/qt", "detail": "Current MSP rate" }
+        {
+          "label": "Predicted Yield",
+          "value": "4.2 t/acre",
+          "detail": "+10.5% vs regional avg"
+        },
+        {
+          "label": "Confidence",
+          "value": "87%",
+          "detail": "High accuracy model"
+        },
+        {
+          "label": "Best Window",
+          "value": "Jul 9-11",
+          "detail": "Optimal harvest dates"
+        },
+        {
+          "label": "Market Price",
+          "value": "₹2,240/qt",
+          "detail": "Current MSP rate"
+        }
       ]
     },
     "floodFeature": {
@@ -186,10 +223,26 @@
       "title": "72-hour advance warning that saves lives",
       "description": "Real-time river monitoring, catchment analysis, and AI-powered flood probability models. We don't just predict floods — we tell you exactly what to do.",
       "metrics": [
-        { "label": "River Level", "value": "4.2m", "detail": "Narmada — rising" },
-        { "label": "Flow Rate", "value": "1,240 m³/s", "detail": "Above seasonal avg" },
-        { "label": "Advance Warning", "value": "72 hrs", "detail": "Before official alerts" },
-        { "label": "Accuracy", "value": "94%", "detail": "Prediction confidence" }
+        {
+          "label": "River Level",
+          "value": "4.2m",
+          "detail": "Narmada — rising"
+        },
+        {
+          "label": "Flow Rate",
+          "value": "1,240 m³/s",
+          "detail": "Above seasonal avg"
+        },
+        {
+          "label": "Advance Warning",
+          "value": "72 hrs",
+          "detail": "Before official alerts"
+        },
+        {
+          "label": "Accuracy",
+          "value": "94%",
+          "detail": "Prediction confidence"
+        }
       ]
     },
     "waterFeature": {
@@ -197,10 +250,26 @@
       "title": "Every drop, optimized",
       "description": "Precision irrigation scheduling powered by soil moisture sensors, weather forecasts, and crop water demand models. Save water, save money, grow more.",
       "metrics": [
-        { "label": "Soil Moisture", "value": "68%", "detail": "Optimal range" },
-        { "label": "Water Saved", "value": "32%", "detail": "vs traditional irrigation" },
-        { "label": "Next Irrigation", "value": "Jul 5", "detail": "06:00 AM recommended" },
-        { "label": "Groundwater", "value": "12.5m", "detail": "Stable depth" }
+        {
+          "label": "Soil Moisture",
+          "value": "68%",
+          "detail": "Optimal range"
+        },
+        {
+          "label": "Water Saved",
+          "value": "32%",
+          "detail": "vs traditional irrigation"
+        },
+        {
+          "label": "Next Irrigation",
+          "value": "Jul 5",
+          "detail": "06:00 AM recommended"
+        },
+        {
+          "label": "Groundwater",
+          "value": "12.5m",
+          "detail": "Stable depth"
+        }
       ]
     },
     "soilFeature": {
@@ -208,10 +277,26 @@
       "title": "Understand what's beneath your feet",
       "description": "Satellite-derived soil health analytics combined with ground-truth sensor data. Monitor nitrogen, phosphorus, potassium, pH, and organic carbon in real-time.",
       "metrics": [
-        { "label": "Soil Health", "value": "76/100", "detail": "Good — alluvial" },
-        { "label": "Nitrogen", "value": "Medium", "detail": "40kg/acre recommended" },
-        { "label": "pH Level", "value": "6.8", "detail": "Slightly acidic — ideal" },
-        { "label": "Organic Carbon", "value": "0.65%", "detail": "Above threshold" }
+        {
+          "label": "Soil Health",
+          "value": "76/100",
+          "detail": "Good — alluvial"
+        },
+        {
+          "label": "Nitrogen",
+          "value": "Medium",
+          "detail": "40kg/acre recommended"
+        },
+        {
+          "label": "pH Level",
+          "value": "6.8",
+          "detail": "Slightly acidic — ideal"
+        },
+        {
+          "label": "Organic Carbon",
+          "value": "0.65%",
+          "detail": "Above threshold"
+        }
       ]
     },
     "schemes": {
@@ -263,10 +348,22 @@
       "title": "Numbers that matter",
       "description": "DHARTI AI is already transforming how India farms.",
       "stats": [
-        { "value": "12,000+", "label": "Farmers Protected" },
-        { "value": "₹200 Cr", "label": "Crop Value Saved" },
-        { "value": "96%", "label": "Prediction Accuracy" },
-        { "value": "3 days", "label": "Earlier Warnings" }
+        {
+          "value": "12,000+",
+          "label": "Farmers Protected"
+        },
+        {
+          "value": "₹200 Cr",
+          "label": "Crop Value Saved"
+        },
+        {
+          "value": "96%",
+          "label": "Prediction Accuracy"
+        },
+        {
+          "value": "3 days",
+          "label": "Earlier Warnings"
+        }
       ]
     },
     "faq": {
@@ -295,7 +392,7 @@
         },
         {
           "question": "What languages are supported?",
-          "answer": "We support all 22 official Indian languages including Hindi, Bengali, Telugu, Marathi, Tamil, Gujarati, Urdu, Kannada, Odia, Malayalam, Punjabi, Assamese, and more. Every farmer can use DHARTI in their native language."
+          "answer": "Currently we support English and Hindi. We're actively developing support for Marathi, Gujarati, Tamil, Telugu, Kannada, and Bengali — launching Q4 2026."
         }
       ]
     },
@@ -605,19 +702,19 @@
     }
   },
   "crops": {
-    "rice": "Rice",
-    "wheat": "Wheat",
-    "maize": "Maize",
-    "cotton": "Cotton",
-    "sugarcane": "Sugarcane",
-    "soybean": "Soybean",
-    "groundnut": "Groundnut",
-    "mustard": "Mustard",
-    "potato": "Potato",
-    "onion": "Onion",
-    "tomato": "Tomato",
-    "millet": "Millet",
-    "pulses": "Pulses",
-    "other": "Other"
+    "rice": "চাউল",
+    "wheat": "গেহুঁ",
+    "maize": "মকাই",
+    "cotton": "লমুম",
+    "sugarcane": "কবু",
+    "soybean": "সোয়াবীন",
+    "groundnut": "বাদাম",
+    "mustard": "হাংগাম",
+    "potato": "আলু",
+    "onion": "তিলহৌ",
+    "tomato": "খামেন অহেই",
+    "millet": "তারা",
+    "pulses": "মশুম",
+    "other": "অতোপ্পা"
   }
 }

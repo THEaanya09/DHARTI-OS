@@ -11,6 +11,7 @@ import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useI18n } from '@/lib/i18n';
+import { ALL_LOCALES, LOCALE_LABELS } from '@/lib/i18n/config';
 import { CROP_OPTIONS } from '@/lib/constants';
 import {
   DEFAULT_FARM_MODEL_FIELDS,
@@ -387,22 +388,22 @@ export default function OnboardingPage() {
                           setData({ ...data, locale: newLocale });
                           setLocale(newLocale);
                         }}
-                        className="grid grid-cols-2 gap-3"
+                        className="grid grid-cols-2 sm:grid-cols-3 gap-3 max-h-[360px] overflow-y-auto pr-1 pb-1"
                       >
-                        {(['en', 'hi'] as Locale[]).map((loc) => (
+                        {ALL_LOCALES.map((loc) => (
                           <Label
                             key={loc}
                             htmlFor={`lang-${loc}`}
                             className={cn(
-                              'flex cursor-pointer items-center gap-3 rounded-xl border p-4 transition-colors',
+                              'flex cursor-pointer items-center gap-3 rounded-xl border p-3 transition-colors',
                               data.locale === loc
-                                ? 'border-primary bg-primary/5'
+                                ? 'border-primary bg-primary/5 ring-1 ring-primary'
                                 : 'border-border hover:border-primary/30'
                             )}
                           >
                             <RadioGroupItem value={loc} id={`lang-${loc}`} />
-                            <span className="text-body font-medium">
-                              {ob.steps.profile.languages[loc]}
+                            <span className="text-body-sm font-medium">
+                              {LOCALE_LABELS[loc]}
                             </span>
                           </Label>
                         ))}
@@ -611,7 +612,7 @@ export default function OnboardingPage() {
                   <div className="rounded-2xl border border-border bg-surface-elevated divide-y divide-border">
                     {[
                       { label: ob.steps.review.name, value: data.name },
-                      { label: ob.steps.review.language, value: data.locale === 'en' ? 'English' : 'हिन्दी' },
+                      { label: ob.steps.review.language, value: LOCALE_LABELS[data.locale] },
                       { label: ob.steps.review.crop, value: data.crop.split(',').map((c) => crops[c.trim() as keyof typeof crops] || c.trim()).join(', ') },
                       { label: ob.steps.review.area, value: `${data.area} ${data.area_unit}` },
                       {
