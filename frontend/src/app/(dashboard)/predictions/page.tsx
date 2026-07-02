@@ -1,21 +1,28 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Search, Filter, Cpu, Target, ChevronDown, ChevronUp, AlertCircle, Sparkles } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useI18n } from '@/lib/i18n';
+import { useIntelligence } from '@/contexts/intelligence-context';
 import { fadeInUp, staggerContainer } from '@/lib/constants';
-import { mockPredictions } from '@/data/mock';
 import { cn } from '@/lib/utils';
 
 export default function PredictionsPage() {
   const { dictionary } = useI18n();
+  const { predictions, hasLiveData, loading } = useIntelligence();
   const p = dictionary.predictions_page;
   const [searchTerm, setSearchTerm] = useState('');
   const [typeFilter, setTypeFilter] = useState<string>('all');
-  const [expandedIds, setExpandedIds] = useState<Set<string>>(new Set(['pred_01']));
+  const [expandedIds, setExpandedIds] = useState<Set<string>>(new Set());
+
+  useEffect(() => {
+    if (predictions.length > 0 && expandedIds.size === 0) {
+      setExpandedIds(new Set([predictions[0].id]));
+    }
+  }, [predictions, expandedIds.size]);
 
   const toggleExpand = (id: string) => {
     const next = new Set(expandedIds);
@@ -27,7 +34,7 @@ export default function PredictionsPage() {
     setExpandedIds(next);
   };
 
-  const filtered = mockPredictions.filter((pred) => {
+  const filtered = predictions.filter((pred) => {
     const matchesSearch = pred.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
       pred.summary.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesType = typeFilter === 'all' || pred.type === typeFilter;
@@ -49,9 +56,9 @@ export default function PredictionsPage() {
 
           <div className="grid gap-3 sm:grid-cols-3">
             {[
-              { label: 'High confidence', value: '92%' },
-              { label: 'Active alerts', value: '3' },
-              { label: 'Next action', value: 'Irrigation' },
+              { label: 'High confidence', value: hasLiveData && predictions[0] ? `${predictions[0].confidence}%` : loading ? '…' : '—' },
+              { label: 'Active alerts', value: String(predictions.filter((pred) => pred.risk_level === 'high' || pred.risk_level === 'critical').length) },
+              { label: 'Next action', value: hasLiveData ? 'Review advisory' : loading ? '…' : 'Run analysis' },
             ].map((item) => (
               <div key={item.label} className="rounded-2xl border border-border/35 bg-background/70 px-4 py-3">
                 <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-muted-foreground">{item.label}</p>
@@ -210,7 +217,7 @@ export default function PredictionsPage() {
                             <div className="space-y-3">
                               <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-muted-foreground">Suggested action</p>
                               <div className="rounded-2xl border border-border/30 bg-card/70 p-4 text-sm leading-7 text-muted-foreground">
-                                Hydrological indicators are stable. Maintain the current agronomic schedule and continue monitoring radar updates.
+                                {pred.summary}
                               </div>
                             </div>
                           )}

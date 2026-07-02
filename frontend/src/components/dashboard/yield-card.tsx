@@ -1,32 +1,40 @@
 'use client';
 
-import { BarChart3, TrendingUp, ArrowUp, ArrowDown, Minus } from 'lucide-react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Progress } from '@/components/ui/progress';
+import { BarChart3 } from 'lucide-react';
 import { useI18n } from '@/lib/i18n';
-import { mockYield } from '@/data/mock';
+import { useIntelligence } from '@/contexts/intelligence-context';
+import { CardEmpty, CardLoading } from '@/components/dashboard/card-state';
 import { cn } from '@/lib/utils';
 
 export function YieldCard() {
   const { dictionary } = useI18n();
   const y = dictionary.dashboard.yield;
-  const yieldData = mockYield;
-  const diff = ((yieldData.predicted_yield - yieldData.historical_avg) / yieldData.historical_avg * 100).toFixed(1);
+  const { yieldData, locationLabel, loading, hasLiveData } = useIntelligence();
+
+  if (loading && !hasLiveData) {
+    return <CardLoading message="Calculating yield forecast…" />;
+  }
+
+  if (!yieldData) {
+    return <CardEmpty message="Yield data unavailable. Run analysis to load live predictions." />;
+  }
+
+  const diff = yieldData.historical_avg > 0
+    ? ((yieldData.predicted_yield - yieldData.historical_avg) / yieldData.historical_avg * 100).toFixed(1)
+    : '0.0';
   const isPositive = Number(diff) > 0;
 
   return (
     <div className="border border-border/30 bg-card p-6 md:p-8 rounded-2xl transition-all duration-200 shadow-sm flex flex-col justify-between h-auto select-none">
       <div className="space-y-6">
-        {/* Header */}
         <div className="flex items-center justify-between">
-            <span className="flex items-center gap-2 text-sm md:text-base font-semibold text-foreground">
-              <BarChart3 className="h-4 w-4 text-muted-foreground" />
-              Yield Intelligence
-            </span>
-            <span className="text-[10px] md:text-sm text-muted-foreground font-mono">Bhopal Region</span>
+          <span className="flex items-center gap-2 text-sm md:text-base font-semibold text-foreground">
+            <BarChart3 className="h-4 w-4 text-muted-foreground" />
+            Yield Intelligence
+          </span>
+          <span className="text-[10px] md:text-sm text-muted-foreground font-mono">{locationLabel}</span>
         </div>
 
-        {/* Prediction Display */}
         <div className="flex items-end justify-between">
           <div className="space-y-1">
             <p className="text-[9px] text-muted-foreground uppercase font-bold tracking-widest">{y.predicted}</p>
@@ -38,11 +46,11 @@ export function YieldCard() {
           <div className="text-base md:text-lg font-semibold text-foreground pb-1">
             <span className={isPositive ? 'text-primary' : 'text-destructive'}>
               {isPositive ? '+' : ''}{diff}%
-            </span> <span className="text-sm text-muted-foreground">vs avg</span>
+            </span>{' '}
+            <span className="text-sm text-muted-foreground">vs avg</span>
           </div>
         </div>
 
-        {/* Confidence Progress Bar */}
         <div className="space-y-3">
           <div className="flex items-center justify-between">
             <p className="text-xs md:text-sm text-muted-foreground uppercase font-bold tracking-widest">{y.confidence}</p>
@@ -53,7 +61,6 @@ export function YieldCard() {
           </div>
         </div>
 
-        {/* Factors List */}
         <div className="space-y-3">
           <p className="text-[9px] font-bold text-muted-foreground uppercase tracking-widest">{y.factors}</p>
           <div className="space-y-2.5">

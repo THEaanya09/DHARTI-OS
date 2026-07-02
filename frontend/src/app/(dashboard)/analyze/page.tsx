@@ -2,38 +2,57 @@
 
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Scan, Play, Loader2, Download, CheckCircle2, MapPin } from 'lucide-react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Scan, Play, Loader2, Download, CheckCircle2, MapPin, AlertCircle } from 'lucide-react';
+import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import { useI18n } from '@/lib/i18n';
+import { useAuth } from '@/contexts/auth-context';
+import { useIntelligence } from '@/contexts/intelligence-context';
 import { fadeInUp, staggerContainer } from '@/lib/constants';
-import { mockInsights, mockFarm } from '@/data/mock';
 import { cn } from '@/lib/utils';
+import { toast } from 'sonner';
 
 type AnalysisState = 'idle' | 'analyzing' | 'complete';
 
 const loadingSteps = [
-  { key: 'weather', duration: 1200 },
-  { key: 'climate', duration: 1800 },
-  { key: 'models', duration: 2200 },
-  { key: 'ai', duration: 1500 },
-  { key: 'preparing', duration: 800 },
+  { key: 'weather', duration: 800 },
+  { key: 'climate', duration: 1000 },
+  { key: 'models', duration: 1200 },
+  { key: 'ai', duration: 900 },
+  { key: 'preparing', duration: 600 },
 ];
 
 export default function AnalyzePage() {
   const { dictionary } = useI18n();
+  const { profile } = useAuth();
+  const { insights, locationLabel, runAnalysis, loading, error, hasLiveData, aiAdvisory } = useIntelligence();
   const a = dictionary.analyze;
-  const [state, setState] = useState<AnalysisState>('idle');
+  const [state, setState] = useState<AnalysisState>(hasLiveData ? 'complete' : 'idle');
   const [currentStep, setCurrentStep] = useState(0);
+
+  const cropsDict = dictionary.crops;
+  const activeCrop = profile?.crop
+    ? profile.crop.split(',').map((c) => cropsDict[c.trim() as keyof typeof cropsDict] || c.trim()).join(', ')
+    : '—';
 
   const startAnalysis = async () => {
     setState('analyzing');
-    for (let i = 0; i < loadingSteps.length; i++) {
-      setCurrentStep(i);
-      await new Promise((r) => setTimeout(r, loadingSteps[i].duration));
+    setCurrentStep(0);
+
+    const stepPromise = (async () => {
+      for (let i = 0; i < loadingSteps.length; i++) {
+        setCurrentStep(i);
+        await new Promise((r) => setTimeout(r, loadingSteps[i].duration));
+      }
+    })();
+
+    try {
+      await Promise.all([runAnalysis(), stepPromise]);
+      setState('complete');
+      toast.success('Analysis complete');
+    } catch {
+      setState('idle');
     }
-    setState('complete');
   };
 
   return (
@@ -48,7 +67,6 @@ export default function AnalyzePage() {
         <p className="mt-1 text-body text-muted-foreground">{a.subtitle}</p>
       </motion.div>
 
-      {/* Farm Selection */}
       <motion.div variants={fadeInUp}>
         <Card>
           <CardContent className="p-6">
@@ -58,28 +76,23 @@ export default function AnalyzePage() {
                   <MapPin className="h-6 w-6" />
                 </div>
                 <div>
-                  <h3 className="text-heading-4">Active Field</h3>
+                  <h3 className="text-heading-4">{profile?.farm_name || 'Active Field'}</h3>
                   <p className="text-body-sm text-muted-foreground">
-                    {mockFarm.area} {mockFarm.area_unit} · {mockFarm.crop} · {mockFarm.location.label}
+                    {profile?.farm_area ?? '—'} acres · {activeCrop} · {locationLabel}
                   </p>
                 </div>
               </div>
 
               <Button
                 onClick={startAnalysis}
-                disabled={state === 'analyzing'}
+                disabled={state === 'analyzing' || loading}
                 className="gap-2"
                 size="lg"
               >
-                {state === 'analyzing' ? (
+                {state === 'analyzing' || loading ? (
                   <>
                     <Loader2 className="h-4 w-4 animate-spin" />
                     {a.analyzing}
-                  </>
-                ) : state === 'complete' ? (
-                  <>
-                    <Scan className="h-4 w-4" />
-                    {a.runAnalysis}
                   </>
                 ) : (
                   <>
@@ -93,7 +106,20 @@ export default function AnalyzePage() {
         </Card>
       </motion.div>
 
-      {/* Analyzing state */}
+      {error && (
+        <motion.div variants={fadeInUp}>
+          <Card className="border-destructive/30 bg-destructive/5">
+            <CardContent className="flex items-start gap-3 p-4">
+              <AlertCircle className="mt-0.5 h-5 w-5 text-destructive" />
+              <div>
+                <p className="text-body-sm font-semibold text-foreground">Analysis failed</p>
+                <p className="text-body-sm text-muted-foreground">{error}</p>
+              </div>
+            </CardContent>
+          </Card>
+        </motion.div>
+      )}
+
       <AnimatePresence mode="wait">
         {state === 'analyzing' && (
           <motion.div
@@ -135,7 +161,6 @@ export default function AnalyzePage() {
           </motion.div>
         )}
 
-        {/* Results */}
         {state === 'complete' && (
           <motion.div
             key="complete"
@@ -151,8 +176,20 @@ export default function AnalyzePage() {
               </Button>
             </div>
 
+            {aiAdvisory && (
+              <Card className="border-primary/20 bg-primary/5">
+                <CardContent className="p-5">
+                  <div className="flex items-center gap-2 mb-2">
+                    <Scan className="h-4 w-4 text-primary" />
+                    <span className="text-body-sm font-semibold text-foreground">AI Advisory</span>
+                  </div>
+                  <p className="text-body-sm text-muted-foreground leading-relaxed">{aiAdvisory}</p>
+                </CardContent>
+              </Card>
+            )}
+
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-              {mockInsights.map((insight) => (
+              {insights.map((insight) => (
                 <Card key={insight.id}>
                   <CardContent className="p-5">
                     <div className="flex items-center gap-2 mb-3">

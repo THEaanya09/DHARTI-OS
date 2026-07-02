@@ -196,3 +196,28 @@ class StatusResponse(BaseModel):
 
     models: dict[str, ModelStatusDetail]
     all_loaded: bool
+
+
+class SoilResponse(BaseModel):
+    """Response body for GET /soil (ISRIC SoilGrids)."""
+
+    latitude: float = Field(..., description="Resolved latitude used for lookup.")
+    longitude: float = Field(..., description="Resolved longitude used for lookup.")
+    requested_latitude: float = Field(..., description="Original requested latitude.")
+    requested_longitude: float = Field(..., description="Original requested longitude.")
+    source: str = Field(default="ISRIC SoilGrids")
+    available: bool = Field(..., description="Whether SoilGrids returned property data.")
+    wrb_class: str | None = Field(default=None, description="WRB soil classification.")
+    phh2o: float | None = Field(default=None, description="Soil pH in H2O.")
+    nitrogen: float | None = Field(default=None, description="Total nitrogen (g/kg).")
+    sand: float | None = Field(default=None, description="Sand content (%).")
+    clay: float | None = Field(default=None, description="Clay content (%).")
+    silt: float | None = Field(default=None, description="Silt content (%).")
+    organic_carbon: float | None = Field(default=None, description="Soil organic carbon (g/kg).")
+    cec: float | None = Field(default=None, description="Cation exchange capacity (cmol/kg).")
+    bulk_density: float | None = Field(default=None, description="Bulk density (kg/dm³).")
+    soil_organic_matter: float | None = Field(default=None, description="Soil organic matter (g/kg).")
+    soil_type: str | None = Field(default=None, description="Derived texture class for flood model.")
+    model_n: int | None = Field(default=None, description="Estimated N for crop recommendation model.")
+    model_p: int | None = Field(default=None, description="Estimated P for crop recommendation model.")
+    model_k: int | None = Field(default=None, description="Estimated K for crop recommendation model.")

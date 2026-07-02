@@ -12,13 +12,21 @@ import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useI18n } from '@/lib/i18n';
 import { CROP_OPTIONS } from '@/lib/constants';
+import {
+  DEFAULT_FARM_MODEL_FIELDS,
+  getCurrentSeason,
+  withSoilPresets,
+  type FarmModelFields,
+} from '@/lib/farm-fields';
+import { FarmModelFieldsForm } from '@/components/farm/farm-model-fields-form';
+import { useSoilGrids } from '@/hooks/use-soil-grids';
 import { cn } from '@/lib/utils';
 import type { OnboardingData, OnboardingStep, Locale, CropType } from '@/types';
 import { useAuth } from '@/contexts/auth-context';
 import { useRouter } from 'next/navigation';
 import { Loader2 } from 'lucide-react';
 
-const TOTAL_STEPS = 5;
+const TOTAL_STEPS = 6;
 
 const INDIAN_STATES_CITIES: Record<string, { name: string; lat: number; lng: number }[]> = {
   'Andhra Pradesh': [
@@ -103,6 +111,21 @@ export default function OnboardingPage() {
     location: null,
   });
 
+  const [farmFields, setFarmFields] = useState<FarmModelFields>({
+    ...DEFAULT_FARM_MODEL_FIELDS,
+    season: getCurrentSeason(),
+    area_unit: 'acres',
+  });
+
+  const { fetchSoil, loading: soilLoading, error: soilError, soilData } = useSoilGrids();
+  const [soilFetchAttempted, setSoilFetchAttempted] = useState(false);
+
+  const applySoilFromCoords = async (lat: number, lng: number) => {
+    setSoilFetchAttempted(true);
+    const updates = await fetchSoil(lat, lng);
+    setFarmFields((prev) => ({ ...prev, ...withSoilPresets(updates ?? {}) }));
+  };
+
   const selectedCrops = data.crop ? data.crop.split(',').map(c => c.trim()).filter(Boolean) : [];
   
   const handleToggleCrop = (cropVal: string) => {
@@ -119,7 +142,7 @@ export default function OnboardingPage() {
   const [selectedCity, setSelectedCity] = useState<string>('');
   
   const [states, setStates] = useState<{ id: string; name: string; iso2: string; latitude: string; longitude: string }[]>([]);
-  const [cities, setCities] = useState<{ id: string; name: string }[]>([]);
+  const [cities, setCities] = useState<{ id: string; name: string; latitude?: string; longitude?: string }[]>([]);
   const [loadingLocations, setLoadingLocations] = useState(false);
 
   // Fetch all states of India on mount
@@ -183,6 +206,7 @@ export default function OnboardingPage() {
     setSelectedState(stateObj.name);
     setSelectedCity('');
     setCities([]);
+    setFarmFields((prev) => ({ ...prev, state_name: stateObj.name }));
     setData((prev) => ({ ...prev, location: null }));
 
     try {
@@ -206,16 +230,38 @@ export default function OnboardingPage() {
     }
     const stateObj = states.find((s) => s.name === selectedState);
     if (stateObj) {
+      const cityObj = cities.find((c) => c.name === val);
+      const lat = cityObj?.latitude
+        ? parseFloat(cityObj.latitude)
+        : parseFloat(stateObj.latitude) || 20.5937;
+      const lng = cityObj?.longitude
+        ? parseFloat(cityObj.longitude)
+        : parseFloat(stateObj.longitude) || 78.9629;
+
       setData((prev) => ({
         ...prev,
         location: {
-          lat: parseFloat(stateObj.latitude) || 20.5937,
-          lng: parseFloat(stateObj.longitude) || 78.9629,
+          lat,
+          lng,
           label: `${val}, ${selectedState}`,
         },
       }));
+      setFarmFields((prev) => ({ ...prev, state_name: selectedState }));
+      void applySoilFromCoords(lat, lng);
     }
   };
+
+  useEffect(() => {
+    if (step === 5) {
+      setFarmFields((prev) => ({ ...prev, ...withSoilPresets(prev) }));
+    }
+  }, [step]);
+
+  useEffect(() => {
+    if (step === 5 && data.location && !soilFetchAttempted && !soilLoading) {
+      void applySoilFromCoords(data.location.lat, data.location.lng);
+    }
+  }, [step, data.location, soilFetchAttempted, soilLoading]);
 
   // Helper for safety key check
   const stateNameKey = (name: string): string => {
@@ -228,13 +274,21 @@ export default function OnboardingPage() {
       case 2: return data.crop.trim().length > 0;
       case 3: return data.area > 0;
       case 4: return data.location !== null;
-      case 5: return true;
+      case 5: return (
+        Boolean(farmFields.season) &&
+        (farmFields.annual_rainfall ?? 0) > 0 &&
+        (farmFields.soil_n ?? 0) > 0 &&
+        (farmFields.soil_p ?? 0) > 0 &&
+        (farmFields.soil_k ?? 0) > 0 &&
+        (farmFields.soil_ph ?? 0) > 0
+      );
+      case 6: return true;
       default: return false;
     }
   };
 
   const handleNext = () => {
-    if (step < 5) setStep((s) => (s + 1) as OnboardingStep);
+    if (step < TOTAL_STEPS) setStep((s) => (s + 1) as OnboardingStep);
   };
   const handleBack = () => {
     if (step > 1) setStep((s) => (s - 1) as OnboardingStep);
@@ -247,9 +301,25 @@ export default function OnboardingPage() {
         language: data.locale,
         crop: data.crop,
         farm_area: data.area,
+        area_unit: data.area_unit,
         latitude: data.location?.lat || null,
         longitude: data.location?.lng || null,
         farm_name: 'Active Field',
+        state_name: farmFields.state_name || selectedState || null,
+        season: farmFields.season,
+        annual_rainfall: farmFields.annual_rainfall,
+        fertilizer_kg: farmFields.fertilizer_kg,
+        pesticide_kg: farmFields.pesticide_kg,
+        land_cover: farmFields.land_cover,
+        soil_type: farmFields.soil_type,
+        elevation_m: farmFields.elevation_m,
+        near_river: farmFields.near_river,
+        historical_floods: farmFields.historical_floods,
+        soil_n: farmFields.soil_n,
+        soil_p: farmFields.soil_p,
+        soil_k: farmFields.soil_k,
+        soil_ph: farmFields.soil_ph,
+        expected_rainfall_mm: farmFields.expected_rainfall_mm,
       });
       router.push('/dashboard');
     } catch (err) {
@@ -507,8 +577,32 @@ export default function OnboardingPage() {
                 </div>
               )}
 
-              {/* Step 5: Review */}
+              {/* Step 5: Field & soil details for ML models */}
               {step === 5 && (
+                <div className="space-y-6">
+                  <div>
+                    <h1 className="text-heading-1">Field & Soil Details</h1>
+                    <p className="mt-2 text-body text-muted-foreground">
+                      These details power yield, flood, and crop recommendation models.
+                    </p>
+                  </div>
+                  <FarmModelFieldsForm
+                    values={farmFields}
+                    onChange={(updates) => setFarmFields((prev) => ({ ...prev, ...updates }))}
+                    soilData={soilData}
+                    soilLoading={soilLoading}
+                    soilError={soilError}
+                    onRefreshSoil={
+                      data.location
+                        ? () => void applySoilFromCoords(data.location!.lat, data.location!.lng)
+                        : undefined
+                    }
+                  />
+                </div>
+              )}
+
+              {/* Step 6: Review */}
+              {step === 6 && (
                 <div className="space-y-8">
                   <div>
                     <h1 className="text-heading-1">{ob.steps.review.title}</h1>
@@ -526,6 +620,12 @@ export default function OnboardingPage() {
                           ? `${data.location.lat}°, ${data.location.lng}°`
                           : '—'),
                       },
+                      { label: 'Season', value: farmFields.season || '—' },
+                      { label: 'Annual rainfall', value: farmFields.annual_rainfall ? `${farmFields.annual_rainfall} mm` : '—' },
+                      { label: 'Soil N-P-K', value: `${farmFields.soil_n ?? '—'} / ${farmFields.soil_p ?? '—'} / ${farmFields.soil_k ?? '—'}` },
+                      { label: 'Soil pH', value: farmFields.soil_ph?.toString() ?? '—' },
+                      { label: 'Land cover', value: farmFields.land_cover || '—' },
+                      { label: 'Soil type', value: farmFields.soil_type || '—' },
                     ].map((item) => (
                       <div key={item.label} className="flex items-center justify-between px-6 py-4">
                         <span className="text-body-sm text-muted-foreground">{item.label}</span>
@@ -550,7 +650,7 @@ export default function OnboardingPage() {
               {ob.back}
             </Button>
 
-            {step < 5 ? (
+            {step < TOTAL_STEPS ? (
               <Button onClick={handleNext} disabled={!canNext()} className="gap-2">
                 {ob.next}
                 <ArrowRight className="h-4 w-4" />

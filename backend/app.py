@@ -1,11 +1,3 @@
-from fastapi import FastAPI
-
-app = FastAPI()
-
-@app.get("/")
-def root():
-    return {"message": "Hello"}
-
 """
 DHARTI OS — FastAPI application entrypoint.
 
@@ -21,10 +13,11 @@ from contextlib import asynccontextmanager
 from typing import AsyncIterator
 
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 
 from core.config import APP_NAME, APP_TAGLINE, APP_VERSION, configure_logging
 from core.model_loader import model_registry
-from routes import health, prediction
+from routes import health, prediction, soil
 
 configure_logging()
 logger = logging.getLogger(__name__)
@@ -54,5 +47,17 @@ app = FastAPI(
     lifespan=lifespan,
 )
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://localhost:3000",
+        "http://127.0.0.1:3000",
+    ],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 app.include_router(health.router)
 app.include_router(prediction.router)
+app.include_router(soil.router)

@@ -16,7 +16,7 @@ import { SoilHealthCard } from '@/components/dashboard/soil-health-card';
 import { SchemeCard } from '@/components/dashboard/scheme-card';
 
 import { useAuth } from '@/contexts/auth-context';
-import { Button } from '@/components/ui/button';
+import { useIntelligence } from '@/contexts/intelligence-context';
 
 function getTimeOfDay(): 'morning' | 'afternoon' | 'evening' {
   const hour = new Date().getHours();
@@ -28,6 +28,7 @@ function getTimeOfDay(): 'morning' | 'afternoon' | 'evening' {
 export default function DashboardPage() {
   const { dictionary } = useI18n();
   const { profile } = useAuth();
+  const { decisionSummary, insights } = useIntelligence();
   const d = dictionary.dashboard;
   const timeKey = getTimeOfDay();
   const greeting = d.greeting
@@ -69,7 +70,9 @@ export default function DashboardPage() {
             <WeatherCard />
             <div className="rounded-[1.5rem] border border-border/35 bg-card/70 p-5 shadow-sm">
               <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-muted-foreground">Recommended next step</p>
-              <p className="mt-2 text-base font-semibold text-foreground">Monitor river levels and hold field operations until the rainfront passes.</p>
+              <p className="mt-2 text-base font-semibold text-foreground">
+                {decisionSummary || insights[0]?.action || 'Run analysis to get field recommendations.'}
+              </p>
             </div>
           </div>
         </motion.div>

@@ -13,6 +13,9 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { toast } from 'sonner';
 import { useI18n } from '@/lib/i18n';
 import { fadeInUp, staggerContainer, CROP_OPTIONS } from '@/lib/constants';
+import { farmFieldsFromProfile, withSoilPresets, type FarmModelFields } from '@/lib/farm-fields';
+import { FarmModelFieldsForm } from '@/components/farm/farm-model-fields-form';
+import { useSoilGrids } from '@/hooks/use-soil-grids';
 import type { CropType } from '@/types';
 import { cn } from '@/lib/utils';
 import { useAuth } from '@/contexts/auth-context';
@@ -31,8 +34,24 @@ export default function SettingsPage() {
   const [farmCrop, setFarmCrop] = useState<string>('');
   const [farmArea, setFarmArea] = useState<number>(0);
   const [areaUnit, setAreaUnit] = useState<'acres' | 'hectares'>('acres');
+  const [farmFields, setFarmFields] = useState<FarmModelFields>(farmFieldsFromProfile({}));
 
   const [saving, setSaving] = useState(false);
+  const { fetchSoil, loading: soilLoading, error: soilError, soilData } = useSoilGrids();
+
+  const refreshSoilFromProfile = async () => {
+    if (profile?.latitude == null || profile?.longitude == null) {
+      toast.error('Set your farm location first to fetch soil data.');
+      return;
+    }
+    const updates = await fetchSoil(profile.latitude, profile.longitude);
+    setFarmFields((prev) => ({ ...prev, ...withSoilPresets(updates ?? {}) }));
+    if (updates) {
+      toast.success('Soil values updated from ISRIC SoilGrids.');
+    } else {
+      toast.message('SoilGrids unavailable — using typical cropland defaults.');
+    }
+  };
 
   // Sync inputs with profile data once loaded
   useEffect(() => {
@@ -42,6 +61,8 @@ export default function SettingsPage() {
       setFarmName(profile.farm_name || '');
       setFarmCrop(profile.crop || '');
       setFarmArea(profile.farm_area || 0);
+      setAreaUnit(profile.area_unit || 'acres');
+      setFarmFields(farmFieldsFromProfile(profile));
     }
   }, [profile]);
 
@@ -76,6 +97,22 @@ export default function SettingsPage() {
         farm_name: farmName,
         crop: farmCrop,
         farm_area: Number(farmArea),
+        area_unit: areaUnit,
+        state_name: farmFields.state_name,
+        season: farmFields.season,
+        annual_rainfall: farmFields.annual_rainfall,
+        fertilizer_kg: farmFields.fertilizer_kg,
+        pesticide_kg: farmFields.pesticide_kg,
+        land_cover: farmFields.land_cover,
+        soil_type: farmFields.soil_type,
+        elevation_m: farmFields.elevation_m,
+        near_river: farmFields.near_river,
+        historical_floods: farmFields.historical_floods,
+        soil_n: farmFields.soil_n,
+        soil_p: farmFields.soil_p,
+        soil_k: farmFields.soil_k,
+        soil_ph: farmFields.soil_ph,
+        expected_rainfall_mm: farmFields.expected_rainfall_mm,
       });
       toast.success('Farm settings saved successfully!');
     } catch (err: any) {
@@ -234,6 +271,17 @@ export default function SettingsPage() {
                     </div>
                   </div>
                 </div>
+
+                <FarmModelFieldsForm
+                  values={farmFields}
+                  onChange={(updates) => setFarmFields((prev) => ({ ...prev, ...updates }))}
+                  showState
+                  soilData={soilData}
+                  soilLoading={soilLoading}
+                  soilError={soilError}
+                  onRefreshSoil={refreshSoilFromProfile}
+                />
+
                 <div className="pt-2">
                   <Button onClick={handleSaveFarm} disabled={saving} className="gap-2 cursor-pointer">
                     <Save className="h-4 w-4" />

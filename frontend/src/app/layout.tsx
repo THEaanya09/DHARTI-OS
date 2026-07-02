@@ -3,6 +3,7 @@ import { Inter, Plus_Jakarta_Sans, JetBrains_Mono } from 'next/font/google';
 import { ThemeProvider } from '@/components/shared/theme-provider';
 import { I18nProvider } from '@/lib/i18n';
 import { AuthProvider } from '@/contexts/auth-context';
+import { IntelligenceProvider } from '@/contexts/intelligence-context';
 import { TooltipProvider } from '@/components/ui/tooltip';
 import { Toaster } from '@/components/ui/sonner';
 import './globals.css';
@@ -65,10 +66,12 @@ export default function RootLayout({
         <ThemeProvider>
           <I18nProvider>
             <AuthProvider>
-              <TooltipProvider>
-                {children}
-                <Toaster position="bottom-right" />
-              </TooltipProvider>
+              <IntelligenceProvider>
+                <TooltipProvider>
+                  {children}
+                  <Toaster position="bottom-right" />
+                </TooltipProvider>
+              </IntelligenceProvider>
             </AuthProvider>
           </I18nProvider>
         </ThemeProvider>

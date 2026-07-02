@@ -14,8 +14,24 @@ export interface UserProfile {
   farm_name: string | null;
   crop: string | null;
   farm_area: number | null;
+  area_unit: 'acres' | 'hectares' | null;
   latitude: number | null;
   longitude: number | null;
+  state_name: string | null;
+  season: string | null;
+  annual_rainfall: number | null;
+  fertilizer_kg: number | null;
+  pesticide_kg: number | null;
+  land_cover: string | null;
+  soil_type: string | null;
+  elevation_m: number | null;
+  near_river: boolean | null;
+  historical_floods: number | null;
+  soil_n: number | null;
+  soil_p: number | null;
+  soil_k: number | null;
+  soil_ph: number | null;
+  expected_rainfall_mm: number | null;
   created_at: string;
 }
 

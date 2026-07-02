@@ -25,6 +25,7 @@ import { useI18n } from '@/lib/i18n';
 import { useIsMobile } from '@/hooks/use-media-query';
 import { cn } from '@/lib/utils';
 import { useAuth } from '@/contexts/auth-context';
+import { useIntelligence } from '@/contexts/intelligence-context';
 import { Loader2 } from 'lucide-react';
 import { toast } from 'sonner';
 
@@ -45,44 +46,38 @@ const navItems = [
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   const { t } = useI18n();
   const { profile, logout, loading, loadingMessage } = useAuth();
+  const { insights, hasLiveData } = useIntelligence();
   const pathname = usePathname();
   const router = useRouter();
   const isMobile = useIsMobile();
   const [collapsed, setCollapsed] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [notifications, setNotifications] = useState([
-    {
-      id: 'not_01',
-      title: 'Heavy precipitation forecast',
-      description: 'Skip scheduled irrigation to prevent root waterlogging and save water.',
-      priority: 'critical',
-      actionLabel: 'Apply Skip Irrigation',
-      read: false,
-      time: '10m ago',
-      confidence: '92%',
-    },
-    {
-      id: 'not_02',
-      title: 'Soil Nitrogen depletion detected',
-      description: 'Nitrogen levels down by 15%. targeted urea application of 40kg/acre recommended.',
-      priority: 'high',
-      actionLabel: 'Apply Urea Plan',
-      read: false,
-      time: '2h ago',
-      confidence: '78%',
-    },
-  ]);
+  const [readIds, setReadIds] = useState<Set<string>>(new Set());
   const [showNotifications, setShowNotifications] = useState(false);
+
+  const notifications = insights
+    .filter((i) => i.priority === 'high' || i.priority === 'critical')
+    .slice(0, 5)
+    .map((insight) => ({
+      id: insight.id,
+      title: insight.title,
+      description: insight.description,
+      priority: insight.priority,
+      actionLabel: 'Review',
+      read: readIds.has(insight.id),
+      time: 'Live',
+      confidence: `${insight.confidence}%`,
+    }));
 
   const unreadCount = notifications.filter((n) => !n.read).length;
 
   const markAllRead = () => {
-    setNotifications(notifications.map((n) => ({ ...n, read: true })));
+    setReadIds(new Set(notifications.map((n) => n.id)));
     toast.success('All decisions marked as read');
   };
 
   const handleApply = (id: string, actionLabel: string) => {
-    setNotifications(notifications.map((n) => n.id === id ? { ...n, read: true } : n));
+    setReadIds((prev) => new Set(prev).add(id));
     toast.success(`Successfully applied: ${actionLabel}`);
   };
 

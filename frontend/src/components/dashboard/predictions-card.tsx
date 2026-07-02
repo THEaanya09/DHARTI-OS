@@ -6,7 +6,8 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { useI18n } from '@/lib/i18n';
-import { mockPredictions } from '@/data/mock';
+import { useIntelligence } from '@/contexts/intelligence-context';
+import { CardEmpty, CardLoading } from '@/components/dashboard/card-state';
 import { cn } from '@/lib/utils';
 
 const typeLabels: Record<string, string> = {
@@ -29,7 +30,16 @@ const riskBadge: Record<string, string> = {
 export function PredictionsCard() {
   const { dictionary } = useI18n();
   const p = dictionary.dashboard.predictions;
-  const predictions = mockPredictions.slice(0, 4);
+  const { predictions, loading, hasLiveData } = useIntelligence();
+  const recentPredictions = predictions.slice(0, 4);
+
+  if (loading && !hasLiveData) {
+    return <CardLoading message="Loading predictions…" />;
+  }
+
+  if (recentPredictions.length === 0) {
+    return <CardEmpty message="No predictions yet. Run analysis to generate live forecasts." />;
+  }
 
   return (
     <Card>
@@ -48,7 +58,7 @@ export function PredictionsCard() {
         </div>
       </CardHeader>
       <CardContent className="space-y-3">
-        {predictions.map((pred) => (
+        {recentPredictions.map((pred) => (
           <div
             key={pred.id}
             className="flex items-start gap-3 rounded-lg border border-border/50 p-3 transition-colors hover:bg-surface/50"
@@ -62,10 +72,8 @@ export function PredictionsCard() {
               </div>
               <p className="mt-1 text-caption text-muted-foreground line-clamp-1">{pred.summary}</p>
               <div className="mt-2 flex items-center gap-4">
-                <span className="text-caption text-muted-foreground font-mono">
-                  {pred.confidence}% conf.
-                </span>
-                {pred.accuracy && (
+                <span className="text-caption text-muted-foreground font-mono">{pred.confidence}% conf.</span>
+                {pred.accuracy != null && (
                   <span className="flex items-center gap-1 text-caption text-success font-mono">
                     <TrendingUp className="h-3 w-3" />
                     {pred.accuracy}% {p.accuracy?.toLowerCase?.() ?? 'accuracy'}
