@@ -4,6 +4,7 @@ import { createContext, useContext, useEffect, useState, type ReactNode } from '
 import { useRouter } from 'next/navigation';
 import { createClient } from '@/lib/supabase';
 import type { Locale, CropType } from '@/types';
+import { postAuthPath } from '@/lib/profile-utils';
 import { toast } from 'sonner';
 
 export interface UserProfile {
@@ -179,9 +180,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       });
 
       if (error) throw error;
-      
+
+      setUser(data.user);
+      const userProfile = await fetchProfile(data.user.id);
+      setProfile(userProfile);
+
       toast.success('Signed in successfully');
-      router.push('/dashboard');
+      router.push(postAuthPath(userProfile));
       return data;
     } catch (error: any) {
       toast.error(error.message || 'Failed to sign in');

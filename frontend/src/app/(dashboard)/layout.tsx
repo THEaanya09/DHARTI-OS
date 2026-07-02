@@ -26,6 +26,7 @@ import { useIsMobile } from '@/hooks/use-media-query';
 import { cn } from '@/lib/utils';
 import { useAuth } from '@/contexts/auth-context';
 import { useIntelligence } from '@/contexts/intelligence-context';
+import { isProfileComplete } from '@/lib/profile-utils';
 import { Loader2 } from 'lucide-react';
 import { toast } from 'sonner';
 
@@ -45,7 +46,7 @@ const navItems = [
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   const { t } = useI18n();
-  const { profile, logout, loading, loadingMessage } = useAuth();
+  const { user, profile, logout, loading, loadingMessage } = useAuth();
   const { insights, hasLiveData } = useIntelligence();
   const pathname = usePathname();
   const router = useRouter();
@@ -82,10 +83,24 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   };
 
   useEffect(() => {
-    if (!loading && profile && profile.crop === null) {
-      router.push('/onboarding');
+    if (!loading && profile && !isProfileComplete(profile)) {
+      router.replace('/onboarding');
     }
   }, [loading, profile, router]);
+
+  const awaitingProfile = Boolean(user && profile === null);
+  const needsOnboarding = Boolean(profile && !isProfileComplete(profile));
+
+  if (loading || awaitingProfile || needsOnboarding) {
+    return (
+      <div className="flex h-screen w-screen flex-col items-center justify-center bg-background gap-4">
+        <Loader2 className="h-8 w-8 animate-spin text-primary" />
+        <p className="text-body-sm text-muted-foreground animate-pulse">
+          {loadingMessage || (needsOnboarding ? 'Redirecting to onboarding…' : 'Checking session...')}
+        </p>
+      </div>
+    );
+  }
 
   const sidebarWidth = collapsed ? 'w-[72px]' : 'w-[260px]';
 
@@ -156,17 +171,6 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       </div>
     </div>
   );
-
-  if (loading && !profile) {
-    return (
-      <div className="flex h-screen w-screen flex-col items-center justify-center bg-background gap-4">
-        <Loader2 className="h-8 w-8 animate-spin text-primary" />
-        <p className="text-body-sm text-muted-foreground animate-pulse">
-          {loadingMessage || 'Checking session...'}
-        </p>
-      </div>
-    );
-  }
 
   return (
     <div className="flex h-screen bg-background overflow-hidden">
