@@ -1,0 +1,602 @@
+{
+  "meta": {
+    "title": "DHARTI AI — Climate Decision Intelligence",
+    "description": "AI-Powered platform helping farmers and governments make smarter climate decisions",
+    "tagline": "Intelligence for the Earth"
+  },
+  "nav": {
+    "home": "Home",
+    "features": "Features",
+    "about": "About",
+    "impact": "Impact",
+    "pricing": "Pricing",
+    "login": "Log in",
+    "signup": "Get Started",
+    "dashboard": "Dashboard",
+    "analyze": "Analyze",
+    "predictions": "Predictions",
+    "settings": "Settings",
+    "logout": "Log out"
+  },
+  "landing": {
+    "hero": {
+      "badge": "AI-Powered Climate Intelligence",
+      "title": "Make smarter decisions for",
+      "titleHighlight": "every acre of Earth",
+      "description": "DHARTI AI transforms satellite data, weather patterns, and soil intelligence into actionable decisions. Not forecasts. Decisions.",
+      "cta": "Start Analyzing",
+      "ctaSecondary": "See How It Works",
+      "stats": {
+        "accuracy": "96% Prediction Accuracy",
+        "farmers": "12,000+ Farmers",
+        "decisions": "2M+ Decisions Made"
+      }
+    },
+    "problem": {
+      "overline": "THE PROBLEM",
+      "title": "Climate decisions shouldn't be guesswork",
+      "description": "Every year, unpredictable weather destroys crops worth ₹50,000 crore. Farmers rely on outdated methods. Governments react instead of prevent. The gap between climate data and human decisions is costing lives and livelihoods.",
+      "stats": {
+        "crop_loss": "₹50,000 Cr",
+        "crop_loss_label": "Annual crop loss to climate events",
+        "affected": "120M+",
+        "affected_label": "Farmers affected by climate uncertainty",
+        "delay": "72 hrs",
+        "delay_label": "Average delay in critical climate alerts"
+      }
+    },
+    "solution": {
+      "overline": "THE SOLUTION",
+      "title": "From data to decisions, in seconds",
+      "description": "DHARTI AI is the intelligence layer between raw climate data and the humans who depend on it. We don't show you the weather — we tell you what to do about it.",
+      "features": {
+        "satellite": {
+          "title": "Satellite Intelligence",
+          "description": "Real-time Earth observation data processed through our proprietary models"
+        },
+        "predictions": {
+          "title": "Predictive Analytics",
+          "description": "AI models trained on decades of climate and agricultural data"
+        },
+        "decisions": {
+          "title": "Decision Engine",
+          "description": "Actionable recommendations tailored to your specific context"
+        }
+      }
+    },
+    "howItWorks": {
+      "overline": "HOW IT WORKS",
+      "title": "Three steps to climate confidence",
+      "steps": {
+        "connect": {
+          "number": "01",
+          "title": "Connect Your Farm",
+          "description": "Pin your farm on the map. We automatically detect soil type, nearby water bodies, elevation, and microclimate zone."
+        },
+        "analyze": {
+          "number": "02",
+          "title": "AI Analyzes Everything",
+          "description": "Our models process 140+ data sources — satellite imagery, weather stations, soil sensors, historical patterns — in real-time."
+        },
+        "decide": {
+          "number": "03",
+          "title": "Get Strategic Decisions",
+          "description": "Receive prioritized recommendations: when to irrigate, when to harvest, when to protect. Not data — decisions."
+        }
+      }
+    },
+    "features": {
+      "overline": "PLATFORM",
+      "title": "Built for the complexity of climate",
+      "tabs": {
+        "weather": {
+          "label": "Weather Intelligence",
+          "title": "Beyond forecasts",
+          "description": "Hyperlocal weather intelligence calibrated to your exact field location, not the nearest city.",
+          "metrics": ["Temperature", "Humidity", "Wind", "Precipitation", "UV Index"]
+        },
+        "flood": {
+          "label": "Flood Intelligence",
+          "title": "Predict before it rises",
+          "description": "River-level monitoring, catchment analysis, and flood probability models with 72-hour advance warning.",
+          "metrics": ["River Level", "Catchment Saturation", "Flow Rate", "Flood Probability"]
+        },
+        "yield": {
+          "label": "Yield Prediction",
+          "title": "Know before you grow",
+          "description": "AI-powered yield estimation factoring soil health, weather patterns, historical performance, and market signals.",
+          "metrics": ["Predicted Yield", "Confidence", "Historical Comparison", "Market Price"]
+        },
+        "sustainability": {
+          "label": "Sustainability",
+          "title": "Measure what matters",
+          "description": "Track your environmental footprint with precision. Water efficiency, carbon impact, biodiversity score — all in one view.",
+          "metrics": ["Water Efficiency", "Carbon Footprint", "Soil Health", "Biodiversity"]
+        }
+      }
+    },
+    "testimonials": {
+      "overline": "TRUSTED BY",
+      "title": "Farmers and governments trust DHARTI",
+      "items": [
+        {
+          "quote": "DHARTI saved my wheat crop last monsoon. The flood warning came 3 days before any government alert.",
+          "name": "Rajesh Kumar",
+          "role": "Farmer, Madhya Pradesh",
+          "crop": "Wheat & Soybean"
+        },
+        {
+          "quote": "We've integrated DHARTI into our district-level disaster response system. Response times improved by 60%.",
+          "name": "Dr. Priya Sharma",
+          "role": "District Collector, Maharashtra",
+          "crop": "Government Official"
+        },
+        {
+          "quote": "The yield predictions are remarkably accurate. We've reduced crop insurance claims by 35% in our region.",
+          "name": "Anil Patel",
+          "role": "Agricultural Officer, Gujarat",
+          "crop": "Multi-crop Region"
+        }
+      ]
+    },
+    "whyFarmingFails": {
+      "overline": "THE GAP",
+      "title": "Why current farming methods fail",
+      "description": "The gap between climate data and farmer decisions costs India ₹50,000 Cr every year.",
+      "items": [
+        {
+          "icon": "clock",
+          "title": "Outdated Methods",
+          "stat": "78%",
+          "description": "of Indian farmers rely on traditional weather prediction, missing critical early warning windows"
+        },
+        {
+          "icon": "alert",
+          "title": "No Early Warning",
+          "stat": "72 hrs",
+          "description": "average delay in climate alerts reaching farmers — often too late to protect crops"
+        },
+        {
+          "icon": "database",
+          "title": "Data Overload",
+          "stat": "140+",
+          "description": "data sources exist but are scattered, technical, and inaccessible for ground-level decision-making"
+        },
+        {
+          "icon": "shield",
+          "title": "Reactive Policies",
+          "stat": "₹34K Cr",
+          "description": "spent annually on post-disaster relief instead of prevention-first climate strategies"
+        }
+      ]
+    },
+    "yieldFeature": {
+      "overline": "YIELD PREDICTION",
+      "title": "Know your harvest before you sow",
+      "description": "AI-powered yield estimation that factors in soil health, weather patterns, historical performance, and market signals. Make planting decisions with confidence.",
+      "metrics": [
+        { "label": "Predicted Yield", "value": "4.2 t/acre", "detail": "+10.5% vs regional avg" },
+        { "label": "Confidence", "value": "87%", "detail": "High accuracy model" },
+        { "label": "Best Window", "value": "Jul 9-11", "detail": "Optimal harvest dates" },
+        { "label": "Market Price", "value": "₹2,240/qt", "detail": "Current MSP rate" }
+      ]
+    },
+    "floodFeature": {
+      "overline": "FLOOD INTELLIGENCE",
+      "title": "72-hour advance warning that saves lives",
+      "description": "Real-time river monitoring, catchment analysis, and AI-powered flood probability models. We don't just predict floods — we tell you exactly what to do.",
+      "metrics": [
+        { "label": "River Level", "value": "4.2m", "detail": "Narmada — rising" },
+        { "label": "Flow Rate", "value": "1,240 m³/s", "detail": "Above seasonal avg" },
+        { "label": "Advance Warning", "value": "72 hrs", "detail": "Before official alerts" },
+        { "label": "Accuracy", "value": "94%", "detail": "Prediction confidence" }
+      ]
+    },
+    "waterFeature": {
+      "overline": "WATER INTELLIGENCE",
+      "title": "Every drop, optimized",
+      "description": "Precision irrigation scheduling powered by soil moisture sensors, weather forecasts, and crop water demand models. Save water, save money, grow more.",
+      "metrics": [
+        { "label": "Soil Moisture", "value": "68%", "detail": "Optimal range" },
+        { "label": "Water Saved", "value": "32%", "detail": "vs traditional irrigation" },
+        { "label": "Next Irrigation", "value": "Jul 5", "detail": "06:00 AM recommended" },
+        { "label": "Groundwater", "value": "12.5m", "detail": "Stable depth" }
+      ]
+    },
+    "soilFeature": {
+      "overline": "SOIL INTELLIGENCE",
+      "title": "Understand what's beneath your feet",
+      "description": "Satellite-derived soil health analytics combined with ground-truth sensor data. Monitor nitrogen, phosphorus, potassium, pH, and organic carbon in real-time.",
+      "metrics": [
+        { "label": "Soil Health", "value": "76/100", "detail": "Good — alluvial" },
+        { "label": "Nitrogen", "value": "Medium", "detail": "40kg/acre recommended" },
+        { "label": "pH Level", "value": "6.8", "detail": "Slightly acidic — ideal" },
+        { "label": "Organic Carbon", "value": "0.65%", "detail": "Above threshold" }
+      ]
+    },
+    "schemes": {
+      "overline": "GOVERNMENT SCHEMES",
+      "title": "Auto-matched to your profile",
+      "description": "DHARTI AI automatically identifies government schemes, subsidies, and insurance programs you're eligible for. Never miss a deadline again.",
+      "items": [
+        {
+          "name": "PM Kisan Samman Nidhi",
+          "benefit": "₹6,000/year",
+          "status": "Eligible",
+          "deadline": "Auto-enrolled"
+        },
+        {
+          "name": "PMFBY Crop Insurance",
+          "benefit": "Crop protection",
+          "status": "Apply now",
+          "deadline": "Before Jul 15"
+        },
+        {
+          "name": "Soil Health Card",
+          "benefit": "Free testing",
+          "status": "Available",
+          "deadline": "No deadline"
+        },
+        {
+          "name": "Micro Irrigation Fund",
+          "benefit": "55% subsidy",
+          "status": "Eligible",
+          "deadline": "Ongoing"
+        }
+      ]
+    },
+    "platformPreview": {
+      "overline": "PLATFORM",
+      "title": "See DHARTI AI in action",
+      "description": "A complete climate operating system — from satellite data to field-level decisions, all in one interface.",
+      "features": [
+        "Real-time weather intelligence",
+        "AI-powered recommendations",
+        "Flood risk monitoring",
+        "Yield prediction engine",
+        "Government scheme matching",
+        "Multi-language support"
+      ]
+    },
+    "impact": {
+      "overline": "IMPACT",
+      "title": "Numbers that matter",
+      "description": "DHARTI AI is already transforming how India farms.",
+      "stats": [
+        { "value": "12,000+", "label": "Farmers Protected" },
+        { "value": "₹200 Cr", "label": "Crop Value Saved" },
+        { "value": "96%", "label": "Prediction Accuracy" },
+        { "value": "3 days", "label": "Earlier Warnings" }
+      ]
+    },
+    "faq": {
+      "overline": "FAQ",
+      "title": "Common questions",
+      "items": [
+        {
+          "question": "Is DHARTI AI free for individual farmers?",
+          "answer": "Yes! DHARTI AI is completely free for individual farmers. We believe climate intelligence should be accessible to everyone. Our premium plans are for agricultural organizations and government bodies."
+        },
+        {
+          "question": "How accurate are the predictions?",
+          "answer": "Our models achieve 96% accuracy for weather predictions and 87% for yield estimates. We use 140+ data sources including satellite imagery, weather stations, and soil sensors, validated against ground truth data."
+        },
+        {
+          "question": "Which crops does DHARTI AI support?",
+          "answer": "We support 14+ crop types including rice, wheat, maize, cotton, sugarcane, soybean, groundnut, mustard, potato, onion, tomato, millet, and pulses. More are being added every month."
+        },
+        {
+          "question": "How does the flood warning system work?",
+          "answer": "We monitor river levels, catchment saturation, rainfall patterns, and upstream conditions in real-time. Our AI models provide 72-hour advance flood warnings — typically 3 days before official government alerts."
+        },
+        {
+          "question": "Is my farm data secure?",
+          "answer": "Absolutely. All data is encrypted at rest and in transit. We follow SOC 2 Type II security standards. Your farm data is never shared with third parties without your explicit consent."
+        },
+        {
+          "question": "What languages are supported?",
+          "answer": "Currently we support English and Hindi. We're actively developing support for Marathi, Gujarati, Tamil, Telugu, Kannada, and Bengali — launching Q4 2026."
+        }
+      ]
+    },
+    "cta": {
+      "title": "Ready to make climate-confident decisions?",
+      "description": "Join thousands of farmers and government officials who trust DHARTI AI for critical climate decisions.",
+      "button": "Start Free Analysis",
+      "note": "No credit card required. Free for individual farmers."
+    },
+    "footer": {
+      "description": "AI-Powered Climate Decision Intelligence for farmers and governments.",
+      "product": "Product",
+      "company": "Company",
+      "links": {
+        "features": "Features",
+        "pricing": "Pricing",
+        "api": "API",
+        "docs": "Documentation",
+        "about": "About",
+        "blog": "Blog",
+        "careers": "Careers",
+        "contact": "Contact"
+      },
+      "copyright": "© 2026 DHARTI AI. All rights reserved.",
+      "madeIn": "Made in India"
+    }
+  },
+  "auth": {
+    "login": {
+      "title": "Welcome back",
+      "description": "Log in to your climate intelligence dashboard",
+      "email": "Email",
+      "password": "Password",
+      "submit": "Log in",
+      "forgot": "Forgot password?",
+      "noAccount": "Don't have an account?",
+      "signupLink": "Create one",
+      "or": "or continue with",
+      "google": "Google",
+      "github": "GitHub"
+    },
+    "signup": {
+      "title": "Start your journey",
+      "description": "Create an account to access climate intelligence",
+      "name": "Full name",
+      "email": "Email",
+      "password": "Password",
+      "confirmPassword": "Confirm password",
+      "submit": "Create account",
+      "hasAccount": "Already have an account?",
+      "loginLink": "Log in",
+      "or": "or continue with",
+      "google": "Google",
+      "github": "GitHub",
+      "terms": "By creating an account, you agree to our Terms of Service and Privacy Policy."
+    }
+  },
+  "onboarding": {
+    "title": "Let's set up your farm",
+    "subtitle": "This takes about 2 minutes",
+    "steps": {
+      "profile": {
+        "title": "About You",
+        "description": "Tell us your name and preferred language",
+        "nameLabel": "Your Name",
+        "namePlaceholder": "Enter your full name",
+        "languageLabel": "Preferred Language",
+        "languages": {
+          "en": "English",
+          "hi": "हिन्दी (Hindi)"
+        }
+      },
+      "farm": {
+        "title": "Your Farm",
+        "description": "Tell us about your farm",
+        "nameLabel": "Farm Name",
+        "namePlaceholder": "e.g., Green Valley Farm",
+        "cropLabel": "Primary Crop",
+        "cropPlaceholder": "Select your primary crop"
+      },
+      "area": {
+        "title": "Farm Area",
+        "description": "How large is your farm?",
+        "areaLabel": "Farm Area",
+        "areaPlaceholder": "Enter farm area",
+        "unitLabel": "Unit",
+        "acres": "Acres",
+        "hectares": "Hectares"
+      },
+      "location": {
+        "title": "Farm Location",
+        "description": "Pin your farm on the map for precise climate data",
+        "instruction": "Click on the map to set your farm location",
+        "selected": "Location selected",
+        "latitude": "Latitude",
+        "longitude": "Longitude"
+      },
+      "review": {
+        "title": "Review & Confirm",
+        "description": "Make sure everything looks right",
+        "name": "Name",
+        "language": "Language",
+        "farmName": "Farm Name",
+        "crop": "Crop",
+        "area": "Area",
+        "location": "Location"
+      }
+    },
+    "next": "Continue",
+    "back": "Back",
+    "finish": "Start Analyzing",
+    "skip": "Skip for now"
+  },
+  "dashboard": {
+    "greeting": "Good {timeOfDay}, {name}",
+    "subtitle": "Here's your climate intelligence overview",
+    "timeOfDay": {
+      "morning": "morning",
+      "afternoon": "afternoon",
+      "evening": "evening"
+    },
+    "weather": {
+      "title": "Weather Intelligence",
+      "feelsLike": "Feels like",
+      "humidity": "Humidity",
+      "wind": "Wind",
+      "uvIndex": "UV Index",
+      "forecast": "7-Day Forecast",
+      "updated": "Updated {time}"
+    },
+    "flood": {
+      "title": "Flood Intelligence",
+      "riskLevel": "Risk Level",
+      "riverLevel": "River Level",
+      "distance": "Distance",
+      "trend": "Trend",
+      "rising": "Rising",
+      "stable": "Stable",
+      "falling": "Falling"
+    },
+    "yield": {
+      "title": "Yield Intelligence",
+      "predicted": "Predicted Yield",
+      "historical": "Historical Average",
+      "confidence": "Confidence",
+      "factors": "Contributing Factors"
+    },
+    "water": {
+      "title": "Water Intelligence",
+      "soilMoisture": "Soil Moisture",
+      "irrigationNeeded": "Irrigation Needed",
+      "nextIrrigation": "Next Irrigation",
+      "waterStress": "Water Stress Index",
+      "groundwater": "Groundwater Level",
+      "yes": "Yes",
+      "no": "No"
+    },
+    "sustainability": {
+      "title": "Sustainability Score",
+      "overall": "Overall Score",
+      "waterEfficiency": "Water Efficiency",
+      "soilHealth": "Soil Health",
+      "carbon": "Carbon Footprint",
+      "biodiversity": "Biodiversity"
+    },
+    "ai": {
+      "title": "AI Decision Advisor",
+      "subtitle": "Strategic recommendations based on current conditions",
+      "viewAll": "View All Insights",
+      "confidence": "Confidence",
+      "action": "Recommended Action",
+      "critical": "Critical",
+      "high": "High Priority",
+      "medium": "Medium Priority",
+      "low": "Low Priority"
+    },
+    "timeline": {
+      "title": "Climate Timeline",
+      "viewAll": "View Full Timeline"
+    },
+    "predictions": {
+      "title": "Recent Predictions",
+      "viewAll": "View All",
+      "accuracy": "Accuracy",
+      "empty": "No predictions yet. Run your first analysis to get started."
+    },
+    "risk": {
+      "title": "Risk Indicators",
+      "low": "Low",
+      "moderate": "Moderate",
+      "high": "High",
+      "critical": "Critical"
+    },
+    "map": {
+      "title": "Farm Overview",
+      "layers": "Map Layers"
+    }
+  },
+  "analyze": {
+    "title": "Analyze Farm",
+    "subtitle": "Run AI-powered analysis on your farm",
+    "selectFarm": "Select Farm",
+    "runAnalysis": "Run Analysis",
+    "analyzing": "Analyzing...",
+    "results": "Analysis Results",
+    "download": "Download Report",
+    "loading": {
+      "weather": "Fetching weather data...",
+      "climate": "Analyzing climate patterns...",
+      "models": "Running prediction models...",
+      "ai": "Generating AI recommendations...",
+      "preparing": "Preparing your report..."
+    }
+  },
+  "predictions_page": {
+    "title": "Prediction History",
+    "subtitle": "Track and review all AI predictions",
+    "search": "Search predictions...",
+    "filter": "Filter",
+    "sort": "Sort by",
+    "type": "Type",
+    "date": "Date",
+    "confidence": "Confidence",
+    "accuracy": "Accuracy",
+    "status": "Status",
+    "details": "View Details",
+    "empty": "No predictions found",
+    "emptyDescription": "Run your first farm analysis to generate predictions"
+  },
+  "settings": {
+    "title": "Settings",
+    "subtitle": "Manage your account and preferences",
+    "tabs": {
+      "profile": "Profile",
+      "farm": "Farm",
+      "preferences": "Preferences",
+      "notifications": "Notifications",
+      "data": "Data & Privacy"
+    },
+    "profile": {
+      "title": "Profile Settings",
+      "name": "Name",
+      "email": "Email",
+      "save": "Save Changes"
+    },
+    "preferences": {
+      "title": "Preferences",
+      "language": "Language",
+      "theme": "Theme",
+      "themeOptions": {
+        "light": "Light",
+        "dark": "Dark",
+        "system": "System"
+      },
+      "units": "Units",
+      "metric": "Metric",
+      "imperial": "Imperial"
+    }
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Something went wrong",
+    "retry": "Try again",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "close": "Close",
+    "search": "Search...",
+    "noResults": "No results found",
+    "viewMore": "View more",
+    "back": "Back",
+    "next": "Next"
+  },
+  "errors": {
+    "404": {
+      "title": "Page not found",
+      "description": "The page you're looking for doesn't exist or has been moved.",
+      "home": "Go Home",
+      "back": "Go Back"
+    },
+    "generic": {
+      "title": "Something went wrong",
+      "description": "An unexpected error occurred. Please try again.",
+      "retry": "Try Again"
+    }
+  },
+  "crops": {
+    "rice": "Rice",
+    "wheat": "Wheat",
+    "maize": "Maize",
+    "cotton": "Cotton",
+    "sugarcane": "Sugarcane",
+    "soybean": "Soybean",
+    "groundnut": "Groundnut",
+    "mustard": "Mustard",
+    "potato": "Potato",
+    "onion": "Onion",
+    "tomato": "Tomato",
+    "millet": "Millet",
+    "pulses": "Pulses",
+    "other": "Other"
+  }
+}
