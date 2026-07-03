@@ -94,6 +94,7 @@ async def predict(payload: PredictionRequest, request: Request) -> PredictionRes
         ai_advisory = generate_ai_advisory(
         decision=decision,
         weather=weather,
+        language=payload.language,  
     )
 
     except Exception as exc:  # noqa: BLE001

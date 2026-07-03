@@ -38,6 +38,9 @@ export interface CropRecommendationInput {
 export interface PredictionRequest {
   latitude: number;
   longitude: number;
+
+  language: string;   
+
   crop_yield: CropYieldInput;
   flood: FloodInput;
   crop_recommendation: CropRecommendationInput;

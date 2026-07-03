@@ -15,11 +15,26 @@ from google import genai
 from core.config import GEMINI_API_KEY, GEMINI_MODEL
 
 logger = logging.getLogger(__name__)
+LANGUAGE_MAP = {
+    "en": "English",
+    "hi": "Hindi",
+    "mr": "Marathi",
+    "ta": "Tamil",
+    "te": "Telugu",
+    "bn": "Bengali",
+    "gu": "Gujarati",
+    "kn": "Kannada",
+    "ml": "Malayalam",
+    "pa": "Punjabi",
+    "or": "Odia",
+    "as": "Assamese",
+}
 
 
 def generate_ai_advisory(
     decision: dict,
     weather: dict | None = None,
+    language: str = "en",
 ) -> str | None:
     """
     Generate a farmer-friendly advisory using Gemini.
@@ -38,6 +53,8 @@ def generate_ai_advisory(
         return None
 
     client = genai.Client(api_key=GEMINI_API_KEY)
+    
+    language_name = LANGUAGE_MAP.get(language, "English")
 
     weather_section = ""
 
@@ -66,7 +83,17 @@ IMPORTANT RULES
 - Mention weather only if it is relevant.
 - Do NOT contradict the Decision Engine.
 - Keep the response under 120 words.
-- Write in simple English.
+
+IMPORTANT LANGUAGE RULES
+
+- The farmer's preferred language is {language_name}.
+- Write the ENTIRE response only in {language_name}.
+- Do NOT translate into English.
+- Do NOT mix multiple languages.
+- Keep agricultural terms simple and easy for farmers.
+-If the preferred language is Hindi, Marathi, Tamil, etc., use native script (Devanagari, Marathi, Tamil, etc.) instead of English transliteration.
+-and generate all the outcomes in the local language itself. like risk->'in the local language' and all.
+
 
 Decision Engine Output
 

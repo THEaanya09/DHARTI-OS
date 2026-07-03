@@ -88,6 +88,11 @@ class PredictionRequest(BaseModel):
         ..., description="Longitude of the farm location."
     )
 
+    language: str = Field(    
+        default="en",
+        description="User preferred language (en, hi, mr, ta, etc.)"
+    )
+
     crop_yield: CropYieldInput
     flood: FloodInput
     crop_recommendation: CropRecommendationInput

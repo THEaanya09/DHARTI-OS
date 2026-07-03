@@ -72,6 +72,7 @@ export function buildPredictionRequest(profile: UserProfile): PredictionRequest 
   return {
     latitude: profile.latitude,
     longitude: profile.longitude,
+    language: profile.language,
     crop_yield: {
       Crop: toModelCropLabel(profile.crop),
       Season: profile.season || getCurrentSeason(),
